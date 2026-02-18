@@ -17,17 +17,17 @@ class ProductSeeder extends Seeder
             [
                 'name'=>'laptop',
                 'description'=>'high quality',
-                'price'=> 70000000
+                'price'=> 700000
             ],
             [
                 'name'=>'Desk Chair',
                 'description'=>'comfortable and good quality',
-                'price'=>90000000
+                'price'=>90000
             ],
             [
                 'name'=>'Iphone 17',
                 'description'=>'high selling in the world',
-                'price'=>590000000
+                'price'=>590000
             ],
         ];
         foreach($products as $product){
