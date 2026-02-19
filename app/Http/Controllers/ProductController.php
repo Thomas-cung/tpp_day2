@@ -18,32 +18,19 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-//     public function store(ProductStoreRequest $request)
-// {
-//     $data = $request->validated();
 
-//     if ($request->hasFile('image')) {
-//         $imageName = time() . '.' . $request->image->extension();
-//         $request->image->move(public_path('productImages'), $imageName);
-
-//         $data['image'] = $imageName; 
-//     }
-
-//     Product::create($data);
-
-//     return redirect()->route('products.index');
-// }
 public function store(ProductStoreRequest $request)
 {
     $data = $request->validated();
 
-    if ($request->hasFile('image')) {
+    if ($request->hasFile('image'))
+        {
+            $imageName = time() . '.' . $request->image->extension();
 
-        $imagePath = $request->file('image')
-                             ->store('products', 'public');
+            $request->image->move(public_path('productImages'), $imageName);
 
-        $data['image'] = $imagePath;
-    }
+            $data = array_merge($data, ['image' => $imageName]);
+        }
 
     Product::create($data);
 
