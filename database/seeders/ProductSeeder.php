@@ -15,16 +15,19 @@ class ProductSeeder extends Seeder
     {
         $products = [
             [
+                'category_id'=>1,
                 'name'=>'laptop',
                 'description'=>'high quality',
                 'price'=> 700000
             ],
             [
+                'category_id'=>2,
                 'name'=>'Desk Chair',
                 'description'=>'comfortable and good quality',
                 'price'=>90000
             ],
             [
+                'category_id'=>3,
                 'name'=>'Iphone 17',
                 'description'=>'high selling in the world',
                 'price'=>590000

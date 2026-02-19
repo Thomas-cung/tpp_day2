@@ -34,6 +34,13 @@
                 <div class="invalid-feedback d-block">{{ $message }}</div>
                 @enderror
             </div>
+            <select name="category_id" class="form-control">
+                @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+                @endforeach
+            </select>
             <div class="mb-3">
                 <label for="description" class="form-label">Product Description</label>
                 <input type="text" class="form-control @error('description') is-invalid @enderror"
@@ -50,6 +57,11 @@
                 <div class="invalid-feedback d-block">{{ $message }}</div>
                 @enderror
             </div>
+            <label>Active or Expired</label>
+
+            <input type="hidden" name="status" value="Expired">
+
+            <input type="checkbox" name="status" value="1" {{ $product->status == '1' ? 'checked' : '' }}>
             <button type="submit" class="btn btn-primary btn-sm">
                 Update
             </button>

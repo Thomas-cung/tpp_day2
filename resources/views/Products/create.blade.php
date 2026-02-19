@@ -57,6 +57,18 @@
                 @enderror
             </div>
             <div class="mb-3">
+                <label for="status" class="form-label">Active or Expired:</label>
+                <input type="checkbox" class="form-check-input mb-2" name="status" role="switch" checked />
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Select your catrgory</label>
+                <select name="category_id" id="category_id">
+                    @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="image" class="form-label">Product Image</label>
                 <input type="file" class="form-control @error('image') is invalid @enderror" name="image">
                 @error('image')

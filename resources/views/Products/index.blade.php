@@ -34,9 +34,11 @@
             <thead>
                 <th class="bg-secondary text-white">ID</th>
                 <th class="bg-secondary text-white">NAME</th>
+                <th class="bg-secondary text-white">CATEGORY</th>
                 <th class="bg-secondary text-white">DESCRIPTION</th>
                 <th class="bg-secondary text-white">IMAGE</th>
                 <th class="bg-secondary text-white">PRICE</th>
+                <th class="bg-secondary text-white">STATUS</th>
                 <th class="bg-secondary text-white">ACTION</th>
             </thead>
             <tbody>
@@ -44,12 +46,15 @@
                 <tr>
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
+                    <td>{{ $product->category->name }}</td>
                     <td>{{ $product->description }}</td>
                     <td>
                         <img src="{{ asset('productImages/'. $product->image) }}" alt="{{ $product->image }}"
                             style="width: 100px; height: auto;">
                     </td>
                     <td>{{ $product->price }}</td>
+                    <td {{ $product->status === 1 ? "text-success" : "text-danger" }}>
+                        {{ $product->status == 1 ? "Active" : "Expired" }}</td>
                     <td>
                         <a href="{{route('products.edit', ['id' => $product->id])}}"
                             class="btn btn-outline-secondary btn-sm me-2">Edit</a>
