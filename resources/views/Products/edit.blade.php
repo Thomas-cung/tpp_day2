@@ -57,11 +57,17 @@
                 <div class="invalid-feedback d-block">{{ $message }}</div>
                 @enderror
             </div>
-            <label>Active or Expired</label>
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <input type="checkbox" class="form-check-input" id="status" name="status"
+                    {{ $product->status ? 'checked' : '' }}>
+            </div>
 
-            <input type="hidden" name="status" value="Expired">
+            <!-- <input type="hidden" name="status" value="Expired"> -->
 
-            <input type="checkbox" name="status" value="1" {{ $product->status == '1' ? 'checked' : '' }}>
+            <!-- <input type="checkbox" name="status" value={{ $product->status }}
+                {{ $product->status == '1' ? 'checked' : '' }}> -->
+
             <button type="submit" class="btn btn-primary btn-sm">
                 Update
             </button>
