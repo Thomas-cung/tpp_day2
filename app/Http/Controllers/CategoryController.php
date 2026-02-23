@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-     public function index()
+    protected $categoryRepository;
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    public function index()
     {
         $categories = Category::all();
 
@@ -28,16 +35,14 @@ class CategoryController extends Controller
             'image' => 'required'
         ]);
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
 
             $request->image->move(public_path('categoryImages'), $imageName);
 
             $data = array_merge($data, ['image' => $imageName]);
         }
-
-        Category::create($data);
+        $this->categoryRepository->store($data);
 
         return redirect()->route('categories.index');
     }
@@ -45,7 +50,8 @@ class CategoryController extends Controller
     public function edit($id)
     {
         // dd($id);
-        $category = Category::find($id);
+        // $category = Category::find($id);
+        $category = $this->categoryRepository->show($id);
 
         return view('categories.edit', compact('category'));
     }
@@ -53,7 +59,8 @@ class CategoryController extends Controller
     public function update(CategoryUpdateRequest $request)
     {
         // dd('hree');
-        $category = Category::find($request->id);
+        // $category = Category::find($request->id);
+        $category = $this->categoryRepository->show($request->id);
 
         $category->update([
             'name' => $request->name,
@@ -61,12 +68,12 @@ class CategoryController extends Controller
         ]);
 
         return redirect()->route('categories.index');
-
     }
 
     public function delete($id)
     {
-        $category = Category::find($id);
+        // $category = Category::find($id);
+        $category = $this->categoryRepository->show($id);
 
         $category->delete();
 

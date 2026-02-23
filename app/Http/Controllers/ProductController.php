@@ -6,10 +6,16 @@ use App\Models\Category;
 use App\Http\Requests\ProductStoreRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Laravel\Prompts\Concerns\Fallback;
 
 class ProductController extends Controller
 {
+    protected $productRepository;
+    public function __construct(ProductRepositoryInterface $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
     public function index()
     {
         $products = Product::with('category')->get();
@@ -45,14 +51,16 @@ class ProductController extends Controller
 
         $data['status'] = $request->has('status') ? true : false;
 
-        $data['category_id'] = $request->category_id;
+        // $data['category_id'] = $request->category_id;
 
-        Product::create($data);
+        // Product::create($data);
+        $this->productRepository->store($data);
         return redirect()->route('products.index');
     }
     public function edit($id)
     {
-        $product = Product::find($id);
+        // $product = Product::find($id);
+        $product = $this->productRepository->show($id);
         $categories = Category::all();
 
         return view('products.edit', compact('product', 'categories'));
@@ -69,7 +77,8 @@ class ProductController extends Controller
         ]);
 
         // dd($data);
-        $product = Product::find($id);
+        // $product = Product::find($id);
+        $product = $this->productRepository->show($id);
         // dd($product);
         $data['category_id'] = $request->category_id;
 
@@ -82,7 +91,8 @@ class ProductController extends Controller
 
     public function delete($id)
     {
-        Product::findOrFail($id)->delete();
+        // Product::findOrFail($id)->delete();
+        $product = $this->productRepository->show($id);
         return redirect()->route('products.index');
     }
 }

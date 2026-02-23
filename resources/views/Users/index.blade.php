@@ -16,7 +16,7 @@
         <table class="table table-bordered table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th>#</th>
+                    <th>id</th>
                     <th>Image</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -33,7 +33,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>
                         @if ($user->image)
-                        <img src="{{ asset('userImages/' . $user->image) }}" alt="{{ $user->name }}" width="50"
+                        <img src="{{ asset('userImage/' . $user->image) }}" alt="{{ $user->name }}" width="80"
                             height="50" class="rounded-circle object-fit-cover">
                         @else
                         <span class="text-muted">—</span>

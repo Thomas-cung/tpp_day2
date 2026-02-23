@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function index()
     {
         $users = User::all();
@@ -28,7 +36,7 @@ class UserController extends Controller
             'phone'    => 'nullable|string',
             'gender'   => 'required|in:male,female,other',
             'status'   => 'nullable',
-            'image'    => 'nullable|image',
+            'image'    => 'required',
         ]);
 
         if ($request->hasFile('image')) {
@@ -40,13 +48,15 @@ class UserController extends Controller
         $data['status'] = $request->has('status') ? true : false;
         $data['password'] = Hash::make($data['password']);
 
-        User::create($data);
+        // User::create($data);
+        $this->userRepository->store($data);
         return redirect()->route('users.index');
     }
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        // $user = User::findOrFail($id);
+        $user = $this->userRepository->show($id);
         return view('users.edit', compact('user'));
     }
 
@@ -62,7 +72,8 @@ class UserController extends Controller
             'image'   => 'nullable|image',
         ]);
 
-        $user = User::findOrFail($id);
+        // $user = User::findOrFail($id);
+        $user = $this->userRepository->show($id);
 
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
@@ -80,7 +91,8 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        User::findOrFail($id)->delete();
+        // User::findOrFail($id)->delete();
+        $user = $this->userRepository->show($id);
         return redirect()->route('users.index');
     }
 }

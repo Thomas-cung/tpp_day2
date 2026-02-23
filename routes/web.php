@@ -36,3 +36,7 @@ Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edi
 Route::post('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
 
 Route::post('/users/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

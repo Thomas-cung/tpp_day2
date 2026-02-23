@@ -46,7 +46,7 @@
                 <tr>
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
-                    <td>{{ $product->category->name }}</td>
+                    <td>{{ $product->category->name ?? '-' }}</td>
                     <td>{{ $product->description }}</td>
                     <td>
                         <img src="{{ asset('productImages/'. $product->image) }}" alt="{{ $product->image }}"
@@ -54,7 +54,8 @@
                     </td>
                     <td>{{ $product->price }}</td>
                     <td {{ $product->status === 1 ? "text-success" : "text-danger" }}>
-                        {{ $product->status == 1 ? "Active" : "Expired" }}</td>
+                        {{ $product->status == 1 ? "Active" : "Expired" }}
+                    </td>
                     <td>
                         <a href="{{route('products.edit', ['id' => $product->id])}}"
                             class="btn btn-outline-secondary btn-sm me-2">Edit</a>
