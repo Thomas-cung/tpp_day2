@@ -27,6 +27,17 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link {{ request()->is('roles') ? 'active' : '' }}" href="{{ route('roles.index') }}">
+                <i class="bi bi-people"></i> Roles
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('permissions') ? 'active' : '' }}"
+                href="{{ route('permissions.index') }}">
+                <i class="bi bi-people"></i> Permissions
+            </a>
+        </li>s
+        <li class="nav-item">
             <a class="nav-link {{ request()->is('articles') ? 'active' : '' }}" href="/articles">
                 <i class="bi bi-journal-text"></i> Articles
             </a>

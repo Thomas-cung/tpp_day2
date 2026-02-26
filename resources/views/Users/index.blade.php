@@ -2,7 +2,9 @@
 
 @section('content')
 <h1 class="mt-4">User List</h1>
+@can('userCerate')
 <a href="{{ route('users.create') }}" class="btn btn-outline-success my-4 btn-sm">+ Create</a>
+@endcan
 <table class="table table-bordered table-hover">
     <thead class="table-dark">
         <tr>
@@ -40,12 +42,16 @@
                 </span>
             </td>
             <td class="d-flex gap-2">
+                @can('userUpdate')
                 <a href="{{ route('users.edit', ['id' => $user->id]) }}"
                     class="btn btn-outline-secondary btn-sm">Edit</a>
+                @endcan
+                @can('userDelete')
                 <form action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                 </form>
+                @endcan
             </td>
         </tr>
         @endforeach

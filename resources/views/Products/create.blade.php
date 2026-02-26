@@ -5,7 +5,7 @@
 <a href="{{ route('products.index') }}" class="btn btn-outline-secondary btn-sm my-3">Back to list</a>
 <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
-    <div class="mb-3">
+    <div class="mb-3"> 
         <label for="name" class="form-label">Product Name</label>
         <input type="text" class="form-control @error('name')  is-invalid @enderror" id="name" name="name"
             placeholder="Enter Product Name" />
