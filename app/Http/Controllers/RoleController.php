@@ -30,11 +30,14 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $data = $request->validate([
             'name' => 'required|unique:roles,name'
         ]);
 
-        $this->roleRepository->store($data);
+        $role = $this->roleRepository->store($data);
+
+        $role->permissions()->sync($request['permission']);
 
         return redirect()->route('roles.index');
     }
@@ -42,21 +45,33 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = $this->roleRepository->show($id);
-        $permissions = Permission::all();
 
-        return view('roles.edit', compact('role', 'permissions'));
+        $rolePermissions = $role->permissions->pluck('id')->toArray();
+
+        // dd($rolePermissions);
+        // dd($role);
+        $permissions = Permission::all();
+        // dd($permissions);
+
+
+        return view('roles.edit', compact('role', 'permissions', 'rolePermissions'));
     }
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $data = $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'permission' => 'required|array'
         ]);
 
+
         $role = $this->roleRepository->show($id);
+        $role->permissions()->sync($request['permission']);
 
         return redirect()->route('roles.index');
     }
+
 
     public function delete($id)
     {

@@ -57,6 +57,14 @@
         @enderror
     </div>
     <div class="mb-3">
+        <label for="role" class="form-label">Select your role</label>
+        <select name="role_id" id="role_id">
+            @foreach ($roles as $role)
+            <option value="{{ $role->id }}">{{ $role->name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="mb-3">
         <label class="form-label">Status</label>
         <div>
             <input type="checkbox" class="form-check-input" id="status" name="status" checked>

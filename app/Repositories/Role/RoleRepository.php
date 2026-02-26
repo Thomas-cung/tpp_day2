@@ -18,6 +18,6 @@ class RoleRepository implements RoleRepositoryInterface
     public function show($id)
     {
 
-        return Role::find($id);
+        return Role::with('permissions')->find($id);
     }
 }

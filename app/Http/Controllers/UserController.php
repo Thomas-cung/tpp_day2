@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +25,8 @@ class UserController extends Controller
     }
     public function create()
     {
-        return view('users.create');
+        $roles = Role::all();
+        return view('users.create', compact('roles'));
     }
     public function store(Request $request)
     {
@@ -55,9 +57,10 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        // $user = User::findOrFail($id);
         $user = $this->userRepository->show($id);
-        return view('users.edit', compact('user'));
+        $roles = Role::all();
+        // dd($role);
+        return view('users.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, $id)
@@ -73,7 +76,9 @@ class UserController extends Controller
         ]);
 
         // $user = User::findOrFail($id);
+        $data['role_id'] = $request->role_id;
         $user = $this->userRepository->show($id);
+
 
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
@@ -86,6 +91,7 @@ class UserController extends Controller
         $data['status'] = $request->has('status') ? true : false;
 
         $user->update($data);
+        $user->syncRoles([$request->role]);
         return redirect()->route('users.index');
     }
 

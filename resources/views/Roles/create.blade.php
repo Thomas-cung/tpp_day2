@@ -13,6 +13,14 @@
         <div class="invalid-feedback d-block">{{ $message }}</div>
         @enderror
     </div>
+    <div class="mt-4">
+        <h3>Premission</h3>
+        @foreach ($permissions as $permission )
+        <label><input type="checkbox" name="permission[]"
+                value="{{ $permission->id }}">{{ $permission->name }}</label><br />
+
+        @endforeach
+    </div>
     <button type="submit" class="btn btn-success btn-sm">Create Role</button>
 </form>
 @endsection

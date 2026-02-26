@@ -3,8 +3,8 @@
 @section('content')
 <h2 class="mt-4">Product List</h2>
 @can('productCreate')
-<a href="{{ route('products.create') }}" class="btn btn-outline-success btn-sm my-4">Create</a>
 @endcan
+<a href="{{ route('products.create') }}" class="btn btn-outline-success btn-sm my-4">Create</a>
 <table class="table table-bordered">
     <thead>
         <th class="bg-secondary text-white">ID</th>
@@ -32,16 +32,16 @@
                 {{ $product->status == 1 ? "Active" : "Expired" }}
             </td>
             <td>
-                @can('productUpadate')
+                @can('productUpdate')
+                @endcan
                 <a href="{{route('products.edit', ['id' => $product->id])}}"
                     class="btn btn-outline-secondary btn-sm me-2">Edit</a>
-                @endcan
                 @can('productDelete')
+                @endcan
                 <form action="{{ route('products.delete', ['id' => $product->id]) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-outline-danger btn-sm mt-2">Delete</button>
                 </form>
-                @endcan
             </td>
         </tr>
         @endforeach

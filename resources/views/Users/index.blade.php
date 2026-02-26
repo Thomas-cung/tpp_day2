@@ -3,13 +3,14 @@
 @section('content')
 <h1 class="mt-4">User List</h1>
 @can('userCerate')
-<a href="{{ route('users.create') }}" class="btn btn-outline-success my-4 btn-sm">+ Create</a>
 @endcan
+<a href="{{ route('users.create') }}" class="btn btn-outline-success my-4 btn-sm">+ Create</a>
 <table class="table table-bordered table-hover">
     <thead class="table-dark">
         <tr>
             <th>id</th>
             <th>Image</th>
+            <th>Role</th>
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
@@ -31,6 +32,7 @@
                 <span class="text-muted">—</span>
                 @endif
             </td>
+            <td>{{ $user->role }}</td>
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->phone ?? '—' }}</td>
@@ -43,15 +45,17 @@
             </td>
             <td class="d-flex gap-2">
                 @can('userUpdate')
+                @endcan
                 <a href="{{ route('users.edit', ['id' => $user->id]) }}"
                     class="btn btn-outline-secondary btn-sm">Edit</a>
-                @endcan
                 @can('userDelete')
+
+                @endcan
                 <form action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                 </form>
-                @endcan
+
             </td>
         </tr>
         @endforeach

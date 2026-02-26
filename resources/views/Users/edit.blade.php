@@ -45,6 +45,16 @@
         @enderror
     </div>
     <div class="mb-3">
+        <label for="phone" class="form-label">Select your role</label>
+        <select name="role" class="form-control">
+            @foreach($roles as $role)
+            <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>
+                {{ $role->name }}
+            </option>
+            @endforeach
+        </select>
+    </div>
+    <div class="mb-3">
         <label class="form-label">Status</label>
         <div>
             <input type="checkbox" class="form-check-input" id="status" name="status"

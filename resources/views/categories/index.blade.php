@@ -3,8 +3,8 @@
 @section('content')
 <h2 class="mt-4">Category List</h2>
 @can('categoryCreate')
-<a href="{{ route('categories.create') }}" class="btn btn-outline-success btn-sm my-4">+Create</a>
 @endcan
+<a href="{{ route('categories.create') }}" class="btn btn-outline-success btn-sm my-4">+Create</a>
 <table class="table table-bordered">
     <thead>
         <th class="bg-secondary text-white">ID</th>
@@ -25,15 +25,15 @@
             </td>
             <td class="d-flex">
                 @can('categoryUpdate')
+                @endcan
                 <a href="{{ route('categories.edit', ['id' => $category->id]) }}"
                     class="btn btn-outline-secondary btn-sm me-2">Edit</a>
-                @endcan
                 @can('categoryDelete')
+                @endcan
                 <form action="{{ route('categories.delete', ['id' => $category->id]) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                 </form>
-                @endcan
             </td>
         </tr>
         @endforeach
