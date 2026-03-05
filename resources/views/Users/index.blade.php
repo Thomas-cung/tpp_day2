@@ -2,9 +2,10 @@
 
 @section('content')
 <h1 class="mt-4">User List</h1>
-@can('userCerate')
-@endcan
+@can('userCreate')
+
 <a href="{{ route('users.create') }}" class="btn btn-outline-success my-4 btn-sm">+ Create</a>
+@endcan
 <table class="table table-bordered table-hover">
     <thead class="table-dark">
         <tr>
@@ -23,7 +24,7 @@
     <tbody>
         @foreach ($users as $user)
         <tr>
-            <td>{{ $loop->iteration }}</td>
+
             <td>
                 @if ($user->image)
                 <img src="{{ asset('userImage/' . $user->image) }}" alt="{{ $user->name }}" width="80" height="50"
@@ -39,23 +40,25 @@
             <td>{{ ucfirst($user->gender ?? '—') }}</td>
             <td>{{ $user->address ?? '—' }}</td>
             <td>
-                <span class="badge {{ $user->status ? 'bg-success' : 'bg-danger' }}">
-                    {{ $user->status ? 'Active' : 'Inactive' }}
-                </span>
+                <form action="{{ route('users.status',['id'=>$user->id]) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-sm {{ $user->status == 1 ? 'btn-success' : 'btn-danger' }}">
+                        {{ $user->status ? 'Active' : 'Inactive' }}
+                    </button>
+                </form>
             </td>
             <td class="d-flex gap-2">
                 @can('userUpdate')
-                @endcan
                 <a href="{{ route('users.edit', ['id' => $user->id]) }}"
                     class="btn btn-outline-secondary btn-sm">Edit</a>
-                @can('userDelete')
-
                 @endcan
+
+                @can('userDelete')
                 <form action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                 </form>
-
+                @endcan
             </td>
         </tr>
         @endforeach

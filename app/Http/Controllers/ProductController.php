@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Http\Requests\ProductStoreRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Repositories\Product\ProductRepositoryInterface;
-use Laravel\Prompts\Concerns\Fallback;
 
 class ProductController extends Controller
 {

@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Spatie\Permission\Models\Role;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Services\User\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    protected $userService;
     protected $userRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository, UserService $userService)
     {
         $this->userRepository = $userRepository;
+        $this->userService = $userService;
     }
 
     public function index()
@@ -99,6 +102,13 @@ class UserController extends Controller
     {
         // User::findOrFail($id)->delete();
         $user = $this->userRepository->show($id);
+        return redirect()->route('users.index');
+    }
+
+    public function status($id)
+    {
+        $this->userService->status($id);
+
         return redirect()->route('users.index');
     }
 }
